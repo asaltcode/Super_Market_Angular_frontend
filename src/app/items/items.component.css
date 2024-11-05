@@ -1,0 +1,7 @@
+.thumbnail{
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    object-fit: cover;
+    box-shadow: 1px 1px 8px black;
+}

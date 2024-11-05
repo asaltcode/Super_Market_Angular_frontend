@@ -1,0 +1,128 @@
+<div class="card my-4">
+  <form>
+    <div class="card-body">
+      <h2>New/Edit Order</h2>
+      <div class="form-group">
+        <label>Order Id:</label>
+        <input class="form-control" type="text" name="orderId" [value]="currentOrder.orderId" readOnly />
+      </div>
+      <div class="form-group">
+        <label>Order Date:</label>
+        <input class="form-control" type="text" name="createdAt" [value]="formatDateString(currentOrder.createdAt)" readOnly />
+      </div>
+      <div class="form-group">
+        <label>Customer:</label>
+        <input class="form-control" type="text" name="customer" [(ngModel)]="currentOrder.customerName" />
+      </div>
+      <h3>Items</h3>
+        <div class="search">
+          <div class="ng-autocomplete p-3">
+            <ng-autocomplete
+              [data]="products"
+              [searchKeyword]="keyword"
+              placeholder="Enter the product name"
+              historyIdentifier="products"
+              [itemTemplate]="itemTemplate"
+              [notFoundTemplate]="notFoundTemplate">
+            </ng-autocomplete>   
+                    
+              
+            <ng-template #itemTemplate let-items>
+              <div (click)="handleProductSearch(items)" class="item p-1">
+                <img src="{{items.thumbnail}}" height="25"> &nbsp;
+                <span  [innerHTML]="items.name"></span> &nbsp; 
+                <!-- <small>Population: {{item.population}}</small> -->
+             
+              </div>
+            </ng-template>
+          
+            <ng-template #notFoundTemplate let-notFound>
+              <div [innerHTML]="notFound"></div>
+            </ng-template>
+          </div>
+        </div>
+      <div class="table-responsive">
+        <table class="table">
+          <thead class="thead-light">
+            <tr>
+              <th>Item Name</th>
+              <th>Unit Price</th>
+              <th>Quantity</th>
+              <th>Amount</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>           
+            <tr *ngFor="let item of currentOrder.items; let i = index">
+              <td>
+                <!-- <mat-form-field class="example-full-width">
+                  <input type="text"
+                         placeholder="Pick one"
+                         matInput
+                         [formControl]="itemControls[i]"
+                         [matAutocomplete]="auto">
+                  <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                    <mat-option *ngFor="let product of filteredOptions[i] | async" [value]="product.name">
+                      {{ product.name }}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field> -->
+                {{item.itemName}}
+              </td>
+              <td>
+                <input class="form-control" type="text" name="unitPrice" (input)="handlePrice($event, item, i)" [value]="item.unitPrice" />
+              </td>
+              <td>
+                <input class="form-control" type="number" name="quantity" (input)="handleQuantityChange($event, item)" (change)="handleQuantityChange($event, item)" [value]="item.quantity" />
+              </td>
+              <td>
+                <input class="form-control" type="number" [value]="item.unitPrice * item.quantity" name="amount" readonly />
+              </td>
+              <td>
+                <button class="btn btn-sm btn-danger" type="button" (click)="removeItem(i)">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <button class="btn btn-secondary mb-3" type="button" (click)="handleAddItem()">Add Item</button>
+      <h3>Order Amount {{ currentOrder.orderAmount }}</h3>
+      <button class="btn btn-success" type="submit" (click)="handleSave(currentOrder._id)">Save</button>
+      &nbsp; &nbsp;
+      <button class="btn btn-danger" (click)="navOrder()">Cancel</button>
+    </div>
+  </form>
+</div>
+<!-- 
+<form class="example-form">
+  <mat-form-field class="example-full-width">
+    <input #stateInput (keyup)="0" matInput placeholder="State" aria-label="State" [matAutocomplete]="auto" [formControl]="stateCtrl">
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option (onSelectionChange)="stateInput.value !=undefined && onEnter($event)" *ngFor="let state of filteredStates | async" [value]="state.name">
+        <img style="vertical-align:middle;" aria-hidden src="{{state.flag}}" height="25" />
+        <span>{{ state.name }}</span> |
+        <small>Population: {{state.population}}</small>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <br />
+
+  <mat-slide-toggle
+    [checked]="stateCtrl.disabled"
+    (change)="stateCtrl.disabled ? stateCtrl.enable( ) : stateCtrl.disable()">
+    Disable Input?
+  </mat-slide-toggle>
+  <button mat-fab extended>
+    <mat-icon>home</mat-icon>
+    Home
+  </button>
+  <section>
+    <div class="example-label">Flat</div>
+    <div class="example-button-row">
+      <button mat-flat-button>Basic</button>
+      <button mat-flat-button disabled>Disabled</button>
+      <a mat-flat-button href="https://www.google.com/" target="_blank">Link</a>
+    </div>
+  </section>
+</form> -->

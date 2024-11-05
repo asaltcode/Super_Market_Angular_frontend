@@ -1,0 +1,30 @@
+<h1 class="my-4">Orders</h1>
+<div class="d-flex justify-content-between">
+  <button class="btn btn-primary mb-4" (click)="handleClick()">New Order</button>
+   <button class="btn btn-primary mb-4" (click)="handleClickProduct()">All Product</button>
+</div>
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead class="thead-light">
+      <tr>
+        <th>Order Id</th>
+        <th>Order Date</th>
+        <th>Customer</th>
+        <th>Order Amount</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let order of orders" >
+        <td>{{order.orderId}}</td>
+        <td>{{formatDateString(order.createdAt)}}</td>
+        <td>{{order.customerName}}</td>
+        <td>{{order.orderAmount}}</td>
+        <td class="actions d-flex justify-content-around">
+          <button class="btn btn-sm btn-warning mr-2" (click)="handleEditOrder(order._id)">Edit</button>
+          <button class="btn btn-sm btn-danger" (click)="handleDeleteOrder(order._id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

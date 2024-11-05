@@ -1,0 +1,23 @@
+<!-- <div style="text-align:center">   -->
+  <div class="ng-autocomplete">
+    <ng-autocomplete
+      [data]="states"
+      [searchKeyword]="keyword"
+      placeholder="Enter the State Name"
+      historyIdentifier="states"
+      [itemTemplate]="itemTemplate"
+      [notFoundTemplate]="notFoundTemplate">
+    </ng-autocomplete>
+  
+    <ng-template #itemTemplate let-item>
+      <div class="item">
+        <img src="{{item.flag}}" height="25">
+        <span [innerHTML]="item.name"></span> &nbsp; | &nbsp;
+        <small>Population: {{item.population}}</small>
+      </div>
+    </ng-template>
+  
+    <ng-template #notFoundTemplate let-notFound>
+      <div [innerHTML]="notFound"></div>
+    </ng-template>
+  </div>
